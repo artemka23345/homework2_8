@@ -7,6 +7,7 @@ import pro.sky.homework2_8.Exeption.EmployeeAlreadyAddedException;
 import pro.sky.homework2_8.Exeption.EmployeeNotFoundException;
 import pro.sky.homework2_8.Exeption.EmployeeStorageIsFullException;
 import pro.sky.homework2_8.service.EmployeeService;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,13 +19,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName) throws EmployeeStorageIsFullException, EmployeeAlreadyAddedException, EmployeeNotFoundException {
         if (EmployeeStorage.size() >= MAX_EMPLOYEE) {
             throw new EmployeeStorageIsFullException("Хранилище заполнено");
-        }
-        if (EmployeeStorage.containsKey(firstName + lastName)) {
+        } else if (EmployeeStorage.containsKey(firstName + lastName)) {
             throw new EmployeeAlreadyAddedException("Уже есть такой сотрудник");
+        } else {
+            Employee newEmployee = new Employee(firstName, lastName);
+            EmployeeStorage.put(newEmployee.getFirstName() + newEmployee.getLastName(), newEmployee);
+            return EmployeeStorage.get(newEmployee.getFirstName() + newEmployee.getLastName());
         }
-        Employee newEmployee = new Employee(firstName,lastName);
-        EmployeeStorage.put(newEmployee.getFirstName() + newEmployee.getLastName(), newEmployee);
-        return newEmployee;
     }
 
     public String listEmployee() {
@@ -32,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public Employee findEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
-        Employee newEmployee = new Employee(firstName,lastName);
+        Employee newEmployee = new Employee(firstName, lastName);
         if (EmployeeStorage.containsKey(newEmployee.getFirstName() + newEmployee.getLastName())) {
             return EmployeeStorage.get(newEmployee.getFirstName() + newEmployee.getLastName());
         } else {
@@ -41,13 +42,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public Employee removeEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
-        if (!EmployeeStorage.containsKey(firstName + lastName)) {
+        Employee newEmployee = new Employee(firstName, lastName);
+        if (!EmployeeStorage.containsKey(newEmployee.getFirstName() + newEmployee.getLastName())) {
             throw new EmployeeNotFoundException("Удаляемый сотрудник не найден");
+        } else {
+            return EmployeeStorage.remove(newEmployee.getFirstName() + newEmployee.getLastName());
         }
-        if (EmployeeStorage.containsKey(firstName + lastName)) {
-            return EmployeeStorage.remove(firstName + lastName);
-        }
-        return null;
     }
 }
 
