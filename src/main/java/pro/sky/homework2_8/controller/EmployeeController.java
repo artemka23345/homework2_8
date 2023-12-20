@@ -3,16 +3,11 @@ package pro.sky.homework2_8.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pro.sky.homework2_8.Employee;
 import pro.sky.homework2_8.Exeption.EmployeeAlreadyAddedException;
 import pro.sky.homework2_8.Exeption.EmployeeNotFoundException;
 import pro.sky.homework2_8.Exeption.EmployeeStorageIsFullException;
 import pro.sky.homework2_8.service.EmployeeService;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/employee")

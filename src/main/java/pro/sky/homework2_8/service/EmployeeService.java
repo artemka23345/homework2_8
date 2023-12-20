@@ -1,7 +1,7 @@
 package pro.sky.homework2_8.service;
 
 
-import pro.sky.homework2_8.Employee;
+import pro.sky.homework2_8.model.Employee;
 import pro.sky.homework2_8.Exeption.EmployeeAlreadyAddedException;
 import pro.sky.homework2_8.Exeption.EmployeeNotFoundException;
 import pro.sky.homework2_8.Exeption.EmployeeStorageIsFullException;
